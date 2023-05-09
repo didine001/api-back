@@ -1,1 +1,20 @@
-[{"Id":2,"Name":"","Username":"Manager","Password":null,"Email":"manager@gmail.com","Adress":"","RoleId":1},{"Id":3,"Name":"","Username":"managero","Password":null,"Email":"managero","Adress":"","RoleId":2},{"Id":4,"Name":"","Username":"dudube","Password":null,"Email":"didine","Adress":"","RoleId":3}]
+[
+  {
+    "Id": 2,
+    "Name": "",
+    "Username": "Manager",
+    "Password": null,
+    "Email": "manager@gmail.com",
+    "Adress": "",
+    "RoleId": 1
+  },
+  {
+    "Id": 3,
+    "Name": "",
+    "Username": "managero",
+    "Password": null,
+    "Email": "managero",
+    "Adress": "",
+    "RoleId": 2
+  }
+]

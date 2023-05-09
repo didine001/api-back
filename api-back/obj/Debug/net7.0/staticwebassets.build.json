@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "3/7vy4+LRniWM2KRaGqHl+hDlNCE3Y5WsVf9MIXlch0=",
+  "Source": "api-back",
+  "BasePath": "_content/api-back",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

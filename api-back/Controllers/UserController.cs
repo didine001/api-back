@@ -37,6 +37,7 @@ namespace MyProject.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateUserById(int id, [FromBody] UpdateUserDto data)
         {
+
             try
             {
                 if (!roleServices.Exists(id))

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace MyProject.Controllers
@@ -27,6 +28,7 @@ namespace MyProject.Controllers
         public IActionResult Register([FromBody] RegistrationInfo registrationInfo)
         {
             List<RegistrationInfo> registrations = LoadRegistrations();
+            registrationInfo.Id = registrations.Max(u => u.Id) + 1;
             bool isValidRegistration = registrations.All(r => r.Username == registrationInfo.Username || r.Email == registrationInfo.Email);
             if (!isValidRegistration)
             {
@@ -46,7 +48,7 @@ namespace MyProject.Controllers
             string data = System.IO.File.ReadAllText("Data/Users.json");
             if (string.IsNullOrEmpty(data))
             {
-                return new List<RegistrationInfo>(); // si le fichier est vide on renvoie une liste vide
+                return new List<RegistrationInfo>(); 
             }
             List<RegistrationInfo> registrations = JsonConvert.DeserializeObject<List<RegistrationInfo>>(data);
             return registrations;

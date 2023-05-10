@@ -1,29 +1,20 @@
 [
   {
-    "Id": 2,
-    "Name": "",
-    "Username": "Manager",
-    "Password": null,
-    "Email": "manager@gmail.com",
-    "Adress": "",
-    "RoleId": 1
-  },
-  {
-    "Id": 3,
-    "Name": "",
-    "Username": "Managrt",
-    "Password": null,
-    "Email": "k",
-    "Adress": "",
-    "RoleId": 3
-  },
-  {
-    "Id": 1,
-    "Name": "",
     "Username": "admin",
     "Password": "admin",
-    "Email": "admin@gmail.com",
-    "Adress": "",
-    "RoleId": 2
+    "Email": "Adminfrdf@gmail.com",
+    "Id": 4
+  },
+  {
+    "Username": "Manager",
+    "Password": "manager",
+    "Email": "Managerfrdf@gmail.com",
+    "Id": 3
+  },
+  {
+    "Username": "User",
+    "Password": null,
+    "Email": "Userfrdfgmail.com",
+    "Id": 2
   }
 ]

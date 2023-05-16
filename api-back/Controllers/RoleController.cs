@@ -8,25 +8,28 @@ namespace MyProject.Controllers
     [Route("api/[controller]")]
     public class RoleController : ControllerBase
     {
-        private RoleServices roleServices;
+        private IRoleService rolesServicesDb;
 
-        public RoleController()
+
+        public RoleController(IRoleService service)
         {
-            this.roleServices = new RoleServices();
+            this.rolesServicesDb = service;
+
         }
 
         [HttpGet]
         public IActionResult GetAllRoles()
         {
-            return Ok(roleServices.GetAll());
+            return Ok(rolesServicesDb.GetAll());
         }
 
+
         [HttpGet("{id}")]
-        public IActionResult GetRoleById(long id)
+        public IActionResult GetRoleById(Guid id)
         {
             try
             {
-                var role = roleServices.GetById(id);
+                var role = rolesServicesDb.GetById(id);
                 return Ok(role);
             }
             catch (Exception ex)
@@ -36,11 +39,12 @@ namespace MyProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRole([FromBody] Role role)
+        public IActionResult CreateRole([FromBody] CreateRoleDto role)
         {
             try
             {
-                roleServices.CreateRole(role);
+                Role roleToCreate = new Role(role.Name);
+                rolesServicesDb.Create(roleToCreate);
                 return Ok(new { Success = true });
             }
             catch (Exception ex)
@@ -50,13 +54,13 @@ namespace MyProject.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateRoleById(long id, [FromBody] Role data)
+        public IActionResult UpdateRoleById(Guid id, [FromBody] UpdateRoleDto data)
         {
             try
             {
-                var roleToUpdate = roleServices.GetById(id);
-                roleToUpdate.Name = data.Name;
-                roleServices.UpdateRole(roleToUpdate);
+                var roleToUpdate = rolesServicesDb.GetById(id);
+                roleToUpdate.UpdateRole(data.name);
+                rolesServicesDb.Update(roleToUpdate);
             }
             catch (Exception ex)
             {
@@ -66,12 +70,11 @@ namespace MyProject.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteRoleById(long id)
+        public IActionResult DeleteRoleById(Guid id)
         {
             try
             {
-                var role = roleServices.GetById(id);
-                roleServices.DeleteRole(role);
+                rolesServicesDb.Delete(id);
             }
             catch (Exception ex)
             {

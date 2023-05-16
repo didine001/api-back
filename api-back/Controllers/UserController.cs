@@ -1,5 +1,4 @@
 ﻿using Api.Models;
-using api_back.Models;
 using api_back.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,23 +8,25 @@ namespace MyProject.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private UserServices userServices;
-        private RoleServices roleServices;
-        public UserController()
+        private IUserService userServices;
+        private IRoleService roleServices;
+
+        public UserController(IUserService service, IRoleService roleService)
         {
-            this.userServices = new UserServices();
-            this.roleServices = new RoleServices();
+
+            this.userServices = service;
+            this.roleServices = roleService;
 
         }
 
         [HttpDelete("{id}")]
 
-        public IActionResult DeleteUserById(long id)
+        public IActionResult DeleteUserById(Guid id)
         {
             try
             {
                 var user = userServices.GetById(id);
-                userServices.DeleteUser(user);
+                userServices.Delete(id);
             }
             catch (Exception ex)
             {
@@ -35,7 +36,7 @@ namespace MyProject.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUserById(int id, [FromBody] UpdateUserDto data)
+        public IActionResult UpdateUserById(Guid id, [FromBody] UpdateUserDto data)
         {
 
             try
@@ -44,11 +45,10 @@ namespace MyProject.Controllers
                 {
                     throw new Exception("id doesnt exists");
                 }
+
                 var userToUpdate = userServices.GetById(id);
-                userToUpdate.Username = data.Username;
-                userToUpdate.Email = data.Email;
-                userToUpdate.RoleId = data.RoleId;
-                userServices.UpdateUser(userToUpdate);
+                userToUpdate.UpdateUser(data.Username, data.Email, data.RoleId);
+                userServices.Update(userToUpdate);
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace MyProject.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserById(long id)
+        public IActionResult GetUserById(Guid id)
         {
             try
             {
@@ -76,14 +76,16 @@ namespace MyProject.Controllers
                 return NotFound(ex.Message);
             }
 
+
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] CreateUserDto user)
         {
             try
             {
-                userServices.CreateUser(user);
+                User userToCreate = new User(user.Username, user.Email, user.Password);
+                userServices.Create(userToCreate);
                 return Ok(new { Success = true });
             }
             catch (Exception ex)

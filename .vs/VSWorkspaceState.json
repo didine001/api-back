@@ -5,6 +5,6 @@
     "\\api-back\\Controllers",
     "\\api-back\\Data"
   ],
-  "SelectedNode": "\\api-back\\Data\\Users.json",
+  "SelectedNode": "\\api-back\\Controllers\\UpdateUserDto.cs",
   "PreviewInSolutionExplorer": false
 }

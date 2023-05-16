@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 
 namespace api_back.Services
 {
-    public class RoleServices
+    public class RoleServices : IRoleService
     {
         private List<Role> LoadRoles()
         {
-            string data = File.ReadAllText("Data/Roles.json");
+            string data = System.IO.File.ReadAllText("Data/Roles.json");
             List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(data);
 
             if (string.IsNullOrEmpty(data) || roles == null)
@@ -23,9 +23,9 @@ namespace api_back.Services
             return roles;
         }
 
-        public Role GetById(long id)
+        public Role GetById(Guid id)
         {
-            if (id == 0)
+            if (id == null || id == Guid.Empty)
             {
                 throw new Exception(" The id is not valid");
             }
@@ -39,14 +39,13 @@ namespace api_back.Services
             return role;
         }
 
-        public Role CreateRole(Role role)
+        public Role Create(Role role)
         {
             if (role == null)
             {
                 throw new Exception("Role shouldn't be null");
             }
             List<Role> roles = LoadRoles();
-            role.Id = roles.Max(u => u.Id) + 1;
             var roleAlreadyExists = roles.Any(r => r.Name == role.Name);
             if (roleAlreadyExists)
             {
@@ -58,7 +57,7 @@ namespace api_back.Services
             return role;
         }
 
-        public Role UpdateRole(Role roleToUpdate)
+        public Role Update(Role roleToUpdate)
         {
             if (roleToUpdate == null)
             {
@@ -77,14 +76,14 @@ namespace api_back.Services
             return roleToUpdate;
         }
 
-        public Role DeleteRole(Role role)
+        public void Delete(Guid id)
         {
-            if (role == null)
+            if (id == null || id == Guid.Empty)
             {
-                throw new Exception("Role shouldn't be null");
+                throw new Exception("id shouldn't be 0");
             }
             List<Role> roles = LoadRoles();
-            var dbRoles = roles.Find(r => r.Name == role.Name);
+            var dbRoles = roles.Find(r => r.Id == id);
             if (dbRoles == null)
             {
                 throw new Exception("Role doesn't exists");
@@ -92,11 +91,10 @@ namespace api_back.Services
             roles.Remove(dbRoles);
             string roleSerialized = JsonConvert.SerializeObject(roles);
             File.WriteAllText("Data/Roles.json", roleSerialized);
-            return role;
         }
-        public bool Exists(int id)
+        public bool Exists(Guid id)
         {
-            if(id == 0)
+            if(id == null || id == Guid.Empty)
             {
                 throw new Exception("id shouldn't be equals to 0 ");
             }

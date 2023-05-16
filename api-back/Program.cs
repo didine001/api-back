@@ -22,9 +22,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
 
-if(appSettings.UseJson)
+if (appSettings.UseJson)
 {
-    builder.Services.AddTransient<IUserService, UserServices >();
+    builder.Services.AddTransient<IUserService, UserServices>();
     builder.Services.AddTransient<IRoleService, RoleServices>();
 }
 else

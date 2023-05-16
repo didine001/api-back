@@ -94,7 +94,7 @@ namespace api_back.Services
         }
         public bool Exists(Guid id)
         {
-            if(id == null || id == Guid.Empty)
+            if (id == null || id == Guid.Empty)
             {
                 throw new Exception("id shouldn't be equals to 0 ");
             }

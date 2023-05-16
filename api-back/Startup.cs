@@ -1,4 +1,6 @@
-﻿namespace Api
+﻿using MediatR;
+
+namespace Api
 {
     public class Startup
     {
@@ -11,8 +13,8 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
-          
-    
+
+            services.AddMediatR(typeof(Startup));
             services.AddControllers();
         }
 

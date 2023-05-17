@@ -25,6 +25,10 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Roles\Commands\" />
+    <Folder Include="Users\Commands\" />
+    <Folder Include="Users\Handlers\" />
+    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

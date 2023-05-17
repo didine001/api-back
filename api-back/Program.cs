@@ -1,6 +1,9 @@
 using api_back;
-using api_back.Data;
-using api_back.Services;
+using api_back.Roles.Services;
+using api_back.Users.Data;
+using api_back.Users.Services;
+using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +21,7 @@ builder.Services.AddCors(options =>
         });
 });
 builder.Services.AddControllers();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<UserServices>());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
@@ -26,11 +30,13 @@ if (appSettings.UseJson)
 {
     builder.Services.AddTransient<IUserService, UserServices>();
     builder.Services.AddTransient<IRoleService, RoleServices>();
+
 }
 else
 {
     builder.Services.AddTransient<IRoleService, RolesServicesDb>();
     builder.Services.AddTransient<IUserService, UserServicesDb>();
+
 
 }
 
